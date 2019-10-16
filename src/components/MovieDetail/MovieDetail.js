@@ -22,26 +22,33 @@ export default class MovieDetail extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      loading: true,
-      api: new MovieDbAPI(this.props.API_KEY)
+      loading: true
     }
   }
 
+  /**
+   * Component did mount
+   */
   componentDidMount() {
     // Chequeo sesion del contexto, si no existe redirijo a register
     const session = this.context.session
     if (!session) {
       return this.props.history.push('/register');
     } 
-    // Get movie
-    this.state.api.getMovie(this.props.match.params.id)
-      .then(movie => {
-        this.setState({
-          loading: false,
-          movie 
-        });
-      }
-    )
+    // Si todo ok recupero movies de la API
+    this.setState({ 
+      api: new MovieDbAPI(session.api_key) 
+    }, () => { 
+      // Get movie
+        this.state.api.getMovie(this.props.match.params.id)
+        .then(movie => {
+          this.setState({
+            loading: false,
+            movie 
+          });
+        }
+      )
+    });
   }
 
   render() {
@@ -68,7 +75,7 @@ export default class MovieDetail extends Component {
               <MovieCard  key={this.state.movie.id} 
                           id={this.state.movie.id} 
                           name={this.state.movie.title} 
-                          overview={`${this.state.movie.overview.substring(0,250)}...`}
+                          
                           image={`https://image.tmdb.org/t/p/w500${this.state.movie.poster_path}`} 
                           release={this.state.movie.release_date}
                           popularity={this.state.movie.popularity} 

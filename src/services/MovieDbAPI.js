@@ -47,7 +47,9 @@ class MovieDbAPI {
 
   getMovie =  (movieID) => {
       return this.getRequest(`${this.API_URL}/movie/${movieID}?api_key=${this.API_KEY}`)
-      .then(res => new Movie(res))
+      .then(res => {
+        return new Movie(res)
+      });
   }
 
   searchMovies = (query, year) => {
