@@ -38,10 +38,9 @@ export default class Home extends Component {
    * Component did mount
    */
   componentDidMount() {
-    // Chequeo sesion del contexto
+    // Chequeo sesion del contexto, si no existe redirijo a register
     const session = this.context.session
     if (!session) {
-      // En caso de haber sesión redirijo al contexto
       return this.props.history.push('/register');
     } 
     // Si todo ok recupero movies de la API

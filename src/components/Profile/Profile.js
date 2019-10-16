@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 // Own modules
-import { UserConsumer } from '../../context/UserContext';
+import UserConsumer from '../../context/UserContext';
 import LocalStorage from '../../utils/Storage';
 
 /**
@@ -23,11 +23,22 @@ export default class Profile extends Component {
   static contextType = UserConsumer;
 
   /**
+   * Did mount
+   */
+  componentDidMount() {
+    // Chequeo sesion del contexto, si no existe redirijo a register
+    const session = this.context.session
+    if (!session) {
+      return this.props.history.push('/register');
+    } 
+  }
+
+  /**
    * Render
    */
   render() {   
     return (
-      <UserConsumer>
+      <UserConsumer.Consumer>
         { props => { 
           return <div className='Login'>
                   <div className='Login__Wrapper'>
@@ -94,7 +105,7 @@ export default class Profile extends Component {
                   </div>
                 </div>
         }}
-      </UserConsumer>
+      </UserConsumer.Consumer>
     );
   }
 
