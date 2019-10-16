@@ -1,6 +1,6 @@
 .form-cards {
-    background-color:#333333;
-    color: #D0CCBF;
+    background: linear-gradient(-45deg, var(--main-color), var(--main-color-light));
+    color: white;
     border-radius: 15px;
     margin-bottom: 10px;
     padding: 20px 50px;

@@ -1,0 +1,10 @@
+.footer {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: linear-gradient(-45deg, var(--main-color), var(--main-color-light));
+  color: white;
+}

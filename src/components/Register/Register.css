@@ -1,0 +1,47 @@
+.Login {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, var(--main-color), var(--main-color-light));
+}
+
+.Login__Wrapper {
+    max-width: 320px;
+    padding: 3rem 2rem;
+    background-color: white;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, .5);
+}
+
+.Login__Form {
+    display: grid;
+    grid-gap: 2rem;
+    min-width: 320px;
+}
+
+.Login__Form .button {
+    align-self: flex-end;
+}
+
+.Login__Logo {
+    justify-self: center;
+    align-self: center;
+    max-width: 70%;
+}
+
+@media only screen and (min-width: 600px) {
+    .Login__Wrapper {
+        max-width: 400px;
+        padding: 4rem 2rem;
+    }
+}
+
+.InputIcon-icon {
+    padding-right: 3px;
+    padding-bottom: 2px;
+}
+
+.InputIcon-icon + input::placeholder{
+    font-size: .9rem;
+}

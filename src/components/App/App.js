@@ -1,101 +1,45 @@
-// Node imports
+// Node Imports
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Own imports
-import Form from '../Form/Form';
-import MovieCard from '../MovieCard/MovieCard';
-import { discoverMovies, searchMovies } from '../../services/MovieDbAPI';
-// CSS imports
-import './App.css';
-// Assets imports
-import logo from '../../assets/images/spinner.gif';
+import MovieDetail from '../MovieDetail/MovieDetail';
+import Home from '../Home/Home';
+import Error404 from '../Error404/Error404';
+import Register from '../Register/Register';
+import Profile from '../Profile/Profile';
+import LocalStorage from '../../utils/Storage';
+import { UserProvider } from '../../context/UserContext';
 
+/**
+ * Component principal de la app
+ */
 export default class App extends Component {
+
   constructor(props) {
     super(props);
-    this.state = { 
-      loading: true,
-      characters: null
+    // Intento recuperar la sesión del storage
+    const user = LocalStorage.readLocalStorage();
+    this.state = {
+      session: user
     }
   }
-  
+
+  /**
+   * Render
+   */
   render() {
     return (
-      <div>
-        <Form onSubmit={this.handleFilterMovie}/>
-        <div className="card-container">
-          { this.state.loading && 
-              <div className="card-container">
-                <div>
-                <img src={logo} alt="loading..." />
-                <h2>Loading data...</h2>
-                </div>
-              </div>
-          }
-          { !this.state.loading && 
-            this.state.movies.length > 0 && 
-            this.state.movies.map( (m, i) => 
-              <MovieCard  key={m.id} 
-                          id={m.id} 
-                          name={m.title} 
-                          overview={`${m.overview.substring(0,125)}...`}
-                          image={`https://image.tmdb.org/t/p/w500${m.poster_path}`} 
-                          release={m.release_date}
-                          popularity={m.popularity} 
-                          vote_average={m.vote_average} 
-                          vote_count={m.vote_count} 
-              />
-            )
-          }
-          { !this.state.loading && 
-            this.state.movies.length === 0 && 
-              <h1>No hay resultados para los filtros indicados</h1>
-          }
-        </div>
-      </div>
+      <UserProvider value={this.state}>
+        <Router>
+            <Switch>
+                <Route path='/movie/:id(\d+)' exact component={MovieDetail}/>
+                <Route path={'/profile'} exact component={Profile} />
+                <Route path={'/register'} exact component={Register} />
+                <Route path={'/'} exact component={Home} />
+                <Route component={Error404} />
+            </Switch>
+        </Router>
+      </UserProvider>
     );
   }
-
-  componentDidMount() {
-    this.discoverMovies();
-  }
-
-  handleFilterMovie = async (name, year) => {
-    // Muestro el spinner
-    this.setState({loading: true});
-    this.search(name);
-  }
-
-  /**
-   * Llama a la capa de servicios para obtener las películas populares
-   */
-  discoverMovies = () => {
-    discoverMovies().then(
-      movies => {
-        this.setState({ 
-            loading: false,
-            movies 
-        }); 
-      }
-    );
-  }
-
-  /**
-   * Llama a la capa de servicios para obtener las películas mediante búsqueda
-   */
-  search = (name) => {
-    console.log(name)
-    if (name && name.trim().length) {
-      searchMovies(name).then(
-        movies => {
-          this.setState({ 
-            loading: false,
-            movies 
-        });
-        }
-      )
-    } else {
-      this.discoverMovies();
-    }
-  };
-
 }

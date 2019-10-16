@@ -2,25 +2,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // Own imports
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import MovieCard from '../MovieCard/MovieCard';
-import { getMovie } from '../../services/MovieDbAPI';
+import MovieDbAPI from '../../services/MovieDbAPI';
 // CSS imports
 import './MovieDetail.css';
 // Assets imports
 import logo from '../../assets/images/spinner.gif';
 
-
+/**
+ * Componente movie detail
+ */
 export default class MovieDetail extends Component {
 
     constructor(props) {
       super(props);
       this.state = { 
         loading: true,
+        api: new MovieDbAPI(this.props.API_KEY)
       }
     }
 
     componentDidMount() {
-      getMovie(this.props.match.params.id)
+      this.state.api.getMovie(this.props.match.params.id)
         .then(movie => {
           this.setState({
             loading: false,
@@ -32,8 +37,10 @@ export default class MovieDetail extends Component {
 
     render() {
       return (
-          <div>
-              <div className='card-container'>
+        <React.Fragment>
+          <Header/>
+          <section className="section">
+            <div className='card-container'>
               { this.state.loading && 
                 <div className='card-container'>
                   <div>
@@ -52,18 +59,20 @@ export default class MovieDetail extends Component {
                 <MovieCard  key={this.state.movie.id} 
                             id={this.state.movie.id} 
                             name={this.state.movie.title} 
-                            overview={`${this.state.movie.overview.substring(1,40)}...`}
+                            overview={`${this.state.movie.overview.substring(0,250)}...`}
                             image={`https://image.tmdb.org/t/p/w500${this.state.movie.poster_path}`} 
                             release={this.state.movie.release_date}
                             popularity={this.state.movie.popularity} 
                             vote_average={this.state.movie.vote_average} 
                             vote_count={this.state.movie.vote_count} 
                 />
-                <Link className='back-link' to='/index'>Volver</Link>
+                <Link className='back-link' to='/'>Volver</Link>
                 </div>
               }
             </div>
-          </div>
+          </section>
+          <Footer/>
+        </React.Fragment>
       );
     }
   }

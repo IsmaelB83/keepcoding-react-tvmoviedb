@@ -6,7 +6,9 @@ import { faCalendar, faFireAlt, faPoll, faVoteYea } from '@fortawesome/free-soli
 // CSS imports
 import './MovieCard.css';
 
-
+/**
+ * Componente movie
+ */
 export default class MovieCard extends Component {
 
   render() {

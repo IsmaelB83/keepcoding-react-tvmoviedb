@@ -14,33 +14,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.header {
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background-color: #333333;
-  color: #D0CCBF;
-}
-
-.header a {
-  text-decoration: none;
-  color: inherit;
-}
-
 .section {
   padding: 20px;
 }
 
-.footer {
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background-color: #333333;
-  color: #D0CCBF;
+:root {
+  --main-color-light: rgb(0, 60, 255);
+  --main-color: rgb(27, 250, 231);
 }
