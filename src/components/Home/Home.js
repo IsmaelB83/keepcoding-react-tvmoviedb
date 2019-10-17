@@ -35,6 +35,21 @@ export default class Home extends Component {
   }
 
   /**
+   * Implementar el catch (error boundary)
+   * (La buena practica es implementar un componente específico que haga de error boundary,
+   * Además ese componente debería proporcionar una "vía de salida" al usuario. Es decir,
+   * renderizar algo que le permita continuar con la operativa o saber que ha fallado algo
+   * ... "intentelo de nuevo" o similar.
+   * )
+   * @param {*} error 
+   * @param {*} errorInfo 
+   */
+  componentDidCatch(error, errorInfo) {
+    console.log(JSON.stringify(error));
+    console.log(JSON.stringify(errorInfo));
+  }
+
+  /**
    * Component did mount
    */
   componentDidMount() {
