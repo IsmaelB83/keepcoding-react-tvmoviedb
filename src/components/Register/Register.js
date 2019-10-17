@@ -96,7 +96,6 @@ class Register extends Component {
                 onChange={this.handleInput('surname')}
                 type='text' 
                 placeholder='type your surname'
-                autoComplete='username'
                 startAdornment={
                   <InputAdornment position='start' className='InputIcon-icon'>
                     <AccountCircleIcon/>
